@@ -9,22 +9,35 @@ const Order_Table = sequelize.define('Order_Table', {
         autoIncrement: true
     },
     order_date: {
-        type: DataTypes.DATEONLY, // DATE olarak güncellendi
+        type: DataTypes.DATEONLY,
         allowNull: true,
         defaultValue: DataTypes.NOW,
+        validate: {
+            isDate: true
+        }
     },
     order_amount: {
         type: DataTypes.REAL,
         allowNull: true,
+        validate: {
+            isFloat: true,
+            min: 0
+        }
     },
     order_status: {
         type: DataTypes.STRING(20),
         allowNull: true,
+        validate: {
+            len: [3, 20]
+        }
     },
     shipping_date: {
-        type: DataTypes.DATEONLY, // DATE olarak güncellendi
+        type: DataTypes.DATEONLY,
         allowNull: true,
         defaultValue: DataTypes.NOW,
+        validate: {
+            isDate: true
+        }
     },
     customer_id: {
         type: DataTypes.INTEGER,
@@ -41,10 +54,10 @@ const Order_Table = sequelize.define('Order_Table', {
             model: "cart",
             key: "cart_id"
         }
-    },
+    }
 }, {
     tableName: 'order_table',
-    timestamps: false, // Timestamps kaldırıldı
+    timestamps: false
 });
 
 module.exports = Order_Table;

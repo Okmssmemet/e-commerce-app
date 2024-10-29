@@ -6,15 +6,23 @@ const Product = sequelize.define('Product', {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true // ID otomatik olarak artacak
+        autoIncrement: true
     },
     product_name: {
         type: DataTypes.STRING(50),
-        allowNull: true
+        allowNull: true,
+        validate: {
+            len: [3, 50],
+            notEmpty: true
+        }
     },
     mrp: {
         type: DataTypes.REAL,
-        allowNull: true
+        allowNull: true,
+        validate: {
+            isFloat: true,
+            min: 0
+        }
     },
     stock: {
         type: DataTypes.BOOLEAN,
@@ -22,13 +30,16 @@ const Product = sequelize.define('Product', {
     },
     brand: {
         type: DataTypes.STRING(255),
-        allowNull: true
+        allowNull: true,
+        validate: {
+            len: [2, 255]
+        }
     },
     category_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-            model: "category", // category tablosuna bağlama
+            model: "category",
             key: "category_id"
         }
     },
@@ -36,13 +47,13 @@ const Product = sequelize.define('Product', {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-            model: "seller", // seller tablosuna bağlama
+            model: "seller",
             key: "seller_id"
         }
     }
 }, {
     tableName: 'product',
-    timestamps: false // createdAt ve updatedAt sütunlarını eklemiyoruz
+    timestamps: false
 });
 
 module.exports = Product;

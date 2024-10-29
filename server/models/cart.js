@@ -11,31 +11,38 @@ const Cart = sequelize.define('Cart', {
     grandtotal: {
         type: DataTypes.REAL,
         allowNull: true,
+        validate: {
+            isFloat: true,
+            min: 0
+        }
     },
     itemtotal: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        validate: {
+            isInt: true,
+            min: 0
+        }
     },
-    customer_id:{
-        type:DataTypes.INTEGER,
-        allowNull:false,
-        references:{
-            model:"customer",
-            key:"customer_id"
+    customer_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: "customer",
+            key: "customer_id"
         }
     },
     product_id: {
-        type:DataTypes.INTEGER,
-        allowNull:false,
-        references:{
-            model:"product",
-            key:"product_id"
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: "product",
+            key: "product_id"
         }
-    },
-    
+    }
 }, {
-    tableName: 'cart', // Veritabanınızdaki tablo adı
-    timestamps: false, // Eğer 'createdAt' ve 'updatedAt' alanları yoksa
+    tableName: 'cart',
+    timestamps: false
 });
 
 module.exports = Cart;

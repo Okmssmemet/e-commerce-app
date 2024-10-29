@@ -5,25 +5,40 @@ const OrderItem = sequelize.define('OrderItem', {
     order_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true // order_id birincil anahtar
+        primaryKey: true,
+        references: {
+            model: "Order_Table",
+            key: "order_id"
+        }
     },
     product_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true // order_id birincil anahtar
+        primaryKey: true,
+        references: {
+            model: "product",
+            key: "product_id"
+        }
     },
     mrp: {
         type: DataTypes.REAL,
-        allowNull: true
+        allowNull: true,
+        validate: {
+            isFloat: true,
+            min: 0
+        }
     },
     quantity: {
         type: DataTypes.INTEGER,
-        allowNull: true
+        allowNull: true,
+        validate: {
+            isInt: true,
+            min: 1
+        }
     }
 }, {
-    tableName: 'orderitem', // Veritabanındaki tablo adı
-    timestamps: false, // 'createdAt' ve 'updatedAt' alanları yok
-    primaryKey: ['order_id', 'product_id'] // Birleşik birincil anahtar
+    tableName: 'orderitem',
+    timestamps: false
 });
 
 module.exports = OrderItem;

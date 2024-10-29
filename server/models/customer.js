@@ -5,41 +5,66 @@ const Customer = sequelize.define('Customer', {
     customer_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true, // Birincil anahtar
+        primaryKey: true,
         autoIncrement: true
     },
     firstname: {
-        type: DataTypes.STRING(50), // character varying(50)
-        allowNull: true, // Not null değilse 'true' olarak bırakabilirsiniz
+        type: DataTypes.STRING(50),
+        allowNull: true,
+        validate: {
+            len: [1, 50],
+            notEmpty: true
+        }
     },
     middlename: {
-        type: DataTypes.STRING(50), // character varying(50)
+        type: DataTypes.STRING(50),
         allowNull: true,
+        validate: {
+            len: [1, 50]
+        }
     },
     lastname: {
-        type: DataTypes.STRING(50), // character varying(50)
+        type: DataTypes.STRING(50),
         allowNull: true,
+        validate: {
+            len: [1, 50],
+            notEmpty: true
+        }
     },
     email: {
-        type: DataTypes.STRING(100), // character varying(100)
+        type: DataTypes.STRING(100),
         allowNull: true,
-        unique: true, // E-posta benzersiz olmalı
+        unique: true,
+        validate: {
+            isEmail: true
+        }
     },
     dateofbirth: {
-        type: DataTypes.DATEONLY, // date
+        type: DataTypes.DATEONLY,
         allowNull: true,
+        validate: {
+            isDate: true
+        }
     },
     phone: {
-        type: DataTypes.BIGINT, // bigint
+        type: DataTypes.BIGINT,
         allowNull: true,
+        validate: {
+            isNumeric: true,
+            len: [10, 15]
+        }
     },
     age: {
-        type: DataTypes.INTEGER, // int
+        type: DataTypes.INTEGER,
         allowNull: true,
-    },
+        validate: {
+            isInt: true,
+            min: 0
+        }
+    }
 }, {
-    tableName: 'customer', // Veritabanınızdaki tablo adı
-    timestamps: false, // Eğer 'createdAt' ve 'updatedAt' alanları yoksa
+    tableName: 'customer',
+    timestamps: false
 });
 
 module.exports = Customer;

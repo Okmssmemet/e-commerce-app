@@ -11,16 +11,21 @@ const Category = sequelize.define('Category', {
     category_name: {
         type: DataTypes.STRING(255),
         allowNull: true,
+        validate: {
+            len: [3, 255],
+            notEmpty: true
+        }
     },
     description: {
         type: DataTypes.STRING(255),
         allowNull: true,
-    },
-    
-    
+        validate: {
+            len: [3, 255]
+        }
+    }
 }, {
-    tableName: 'category', // Veritabanınızdaki tablo adı
-    timestamps: false, // Eğer 'createdAt' ve 'updatedAt' alanları yoksa
+    tableName: 'category',
+    timestamps: false
 });
 
 module.exports = Category;

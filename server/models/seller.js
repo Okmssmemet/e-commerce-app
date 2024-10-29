@@ -6,23 +6,35 @@ const Seller = sequelize.define('Seller', {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true // ID otomatik olarak artacak
+        autoIncrement: true
     },
     seller_name: {
         type: DataTypes.STRING(255),
-        allowNull: true
+        allowNull: true,
+        validate: {
+            len: [2, 255],
+            notEmpty: true
+        }
     },
     seller_phone: {
         type: DataTypes.BIGINT,
-        allowNull: true
+        allowNull: true,
+        validate: {
+            isNumeric: true,
+            len: [10, 15]
+        }
     },
     total_sales: {
         type: DataTypes.REAL,
-        allowNull: true
+        allowNull: true,
+        validate: {
+            isFloat: true,
+            min: 0
+        }
     }
 }, {
     tableName: 'seller',
-    timestamps: false // createdAt ve updatedAt sütunlarını eklemiyoruz
+    timestamps: false
 });
 
 module.exports = Seller;
