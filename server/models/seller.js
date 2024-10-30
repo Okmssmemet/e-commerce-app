@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../data/db');
+const bcrypt = require('bcrypt');
 
 const Seller = sequelize.define('Seller', {
     seller_id: {
@@ -31,10 +32,27 @@ const Seller = sequelize.define('Seller', {
             isFloat: true,
             min: 0
         }
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            len: [8, 100],
+        }
     }
 }, {
     tableName: 'seller',
     timestamps: false
+});
+
+Seller.beforeCreate(async (seller) => {
+    seller.password = await bcrypt.hash(seller.password, 10);
+});
+
+Seller.beforeUpdate(async (seller) => {
+    if (seller.changed('password')) {
+        seller.password = await bcrypt.hash(seller.password, 10);
+    }
 });
 
 module.exports = Seller;

@@ -10,9 +10,11 @@ const productRoute = require("./Product");
 const reviewRoute = require("./Review");
 const sellerRoute = require("./Seller");
 const orderItemRoute = require("./OrderItem");
+const authRoutes = require('./Auth');
 
 const router = express.Router();
 
+router.use("/auth",authRoutes);
 router.use("/customer", userRoute);
 router.use("/address", addressRoute);
 router.use("/cart", cartRoute);
